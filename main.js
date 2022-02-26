@@ -4,7 +4,7 @@ screen_width = "";
 screen_height = "";
 draw_apple = "";
 to_number = 0;
-apple = "";
+draw_apple = "";
 speak_data = "";
 
 
@@ -35,18 +35,28 @@ function preload(){
 }
 
 function setup() {
-    canvas = createCanvas(900, 600);
+    screen_width = window.innerWidth;
+    screen_height = window.innerHeight;
+    canvas = createCanvas(screen_width, screen_height-150);
+    canvas.position(50,100);
 }
 
 function draw() {
     if(draw_apple == "set")
     {
         for(var i = 1; i<=to_number;i++){
-            x = Math.floor(Math.random * 900);
-            y = Math.floor(Math.random * 600);
-            image(apple,x,y,50,50);
+            x = Math.floor(Math.random * 700);
+            y = Math.floor(Math.random * 400);
+            image(apple,x,y,100,100);
         }
         document.getElementById("status").innerHTML = "Apple is drawn. ";
         draw_apple = "";
+        speak();
     }
+}
+function speak(){
+    var synth=window.speechSynthesis;
+    speak_data = to_number + "Apple is drawn";
+    var utterThis = new SpeechSynthesisUtterance(speak_data);
+    synth.speak(utterThis);
 }
